@@ -655,28 +655,29 @@ workers:
 
     # List of worker sets. Each item can overwrite values from the parent `workers` and `workers.celery`
     # section.
-    sets: []
-    # sets:
-    #   - name: highcpu
-    #     replicas: 2
-    #     queue: "highcpu"
-    #     resources:
-    #       requests:
-    #         memory: "2Gi"
-    #         cpu: "4000m"
-    #       limits:
-    #         memory: "4Gi"
-    #         cpu: "8000m"
-    #   - name: highmem
-    #     replicas: 2
-    #     queue: "highmem"
-    #     resources:
-    #       requests:
-    #         memory: "4Gi"
-    #         cpu: "2000m"
-    #       limits:
-    #         memory: "8Gi"
-    #         cpu: "4000m"
+    sets:
+      - name: highcpu
+        image: registry.eodc.eu/eopf/eopf-conversion:latest
+        replicas: 2
+        queue: "highcpu"
+        resources:
+          requests:
+            memory: "2Gi"
+            cpu: "4000m"
+          limits:
+            memory: "4Gi"
+            cpu: "8000m"
+      - name: highmem
+        image: registry.eodc.eu/eopf/eopf-conversion:3.0.0g
+        replicas: 2
+        queue: "highmem"
+        resources:
+          requests:
+            memory: "4Gi"
+            cpu: "2000m"
+          limits:
+            memory: "8Gi"
+            cpu: "4000m"
 
     # Update Strategy when Airflow Celery worker is deployed as a StatefulSet
     updateStrategy: ~
