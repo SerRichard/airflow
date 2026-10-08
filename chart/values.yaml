@@ -149,7 +149,8 @@ ipFamilies: []
 
 # List of existing Kubernetes secrets containing Base64 encoded credentials to connect to private
 # registries. Items can be either strings or {name: secret} objects.
-imagePullSecrets: []
+imagePullSecrets:
+  - name: eopf-cpm-regcred-new
 
 # Ingress configuration
 ingress:
@@ -657,7 +658,7 @@ workers:
     # section.
     sets:
       - name: highcpu
-        image: registry.eodc.eu/eopf/eopf-conversion:latest
+        image: registry.eodc.eu/eopf/eopf-conversion:2.7.0e
         replicas: 2
         queue: "highcpu"
         resources:
