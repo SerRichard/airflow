@@ -167,7 +167,7 @@ spec:
         {{- if and $persistence .Values.workers.celery.persistence.fixPermissions $securityContextsIds }}
         - name: volume-permissions
           resources: {{- toYaml .Values.workers.celery.resources | nindent 12 }}
-          image: {{ template "airflow_image" . }}
+          image: {{ $workers.image | quote }}
           imagePullPolicy: {{ .Values.images.airflow.pullPolicy }}
           command:
             - chown
@@ -186,7 +186,7 @@ spec:
         {{- end }}
         {{- if .Values.workers.celery.kerberosInitContainer.enabled }}
         - name: kerberos-init
-          image: {{ template "airflow_image" . }}
+          image: {{ $workers.image | quote }}
           {{- if $containerSecurityContextKerberosInitContainer }}
           securityContext: {{ $containerSecurityContextKerberosInitContainer | nindent 12 }}
           {{- end }}
@@ -267,7 +267,7 @@ spec:
         {{- end }}
       containers:
         - name: worker
-          image: {{ template "airflow_image" . }}
+          image: {{ $workers.image | quote }}
           imagePullPolicy: {{ .Values.images.airflow.pullPolicy }}
           {{- if $containerSecurityContext }}
           securityContext: {{ $containerSecurityContext | nindent 12 }}
@@ -355,7 +355,7 @@ spec:
         {{- end }}
         {{- if .Values.workers.celery.logGroomerSidecar.enabled }}
         - name: worker-log-groomer
-          image: {{ template "airflow_image" . }}
+          image: {{ $workers.image | quote }}
           imagePullPolicy: {{ .Values.images.airflow.pullPolicy }}
           {{- if $containerSecurityContextLogGroomerSidecar }}
           securityContext: {{ $containerSecurityContextLogGroomerSidecar | nindent 12 }}
@@ -411,7 +411,7 @@ spec:
         {{- end }}
         {{- if .Values.workers.celery.kerberosSidecar.enabled }}
         - name: worker-kerberos
-          image: {{ template "airflow_image" . }}
+          image: {{ $workers.image | quote }}
           imagePullPolicy: {{ .Values.images.airflow.pullPolicy }}
           {{- if $containerSecurityContextKerberosSidecar }}
           securityContext: {{ $containerSecurityContextKerberosSidecar | nindent 12 }}
